@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player App</title>
+ 	<link rel="stylesheet" type="text/css" href="app.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" integrity="sha512-BnbUDfEUfV0Slx6TunuB042k9tuKe3xrD6q4mg5Ed72LTgzDIcLPxg6yI2gcMFRyomt+yJJxE+zJwNmxki6/RA==" crossorigin="anonymous" />
+
+</head>
+<body>
+    <div class="main_div">
+    	<div class="music_container">
+    		<h1 id="title">Ye Jism</h1>
+    		<h3 id="artist">Ali Azmat</h3>
+    		<div class="img_container">
+				<img src="./images/data-1.png" alt="artist/img" class="card-img">
+			</div>
+			<audio src="./Music/data-1.mp3"></audio>
+
+            <div class="volume_muted">
+                <i class="fas fa-heart" title="By Heartly" id="Heart"></i>                
+                <i class="fas fa-volume-up" id="muteBtn" title="Press Btn to Mute"></i>
+            </div>
+
+			<!-- Proges-Bar -->
+			<div class="progressbar_container" id="progress_container">
+				<div class="progress_meter">
+					<div id="current_time">0:00</div>
+					<div id="duration">3:51</div>
+				</div>
+				<div class="progress_div" id="progress_div">
+					<div class="progress" id="progress"></div>
+                    <!-- <input type="range" class="progress" id="progress"> -->
+				</div>
+			</div>
+			<!-- Proges-Bar -->
+
+
+			<div class="controls">
+                <i class="fas fa-backward" id="prev" title="Previous"></i>
+				<i class="fas fa-play main-button" id="play" title="Play"></i>
+				<i class="fas fa-forward" id="next" title="Next"></i>
+            </div>
+
+            <div id="volume">
+                <i class="fas fa-volume-down" id="volumeUp"></i>
+                <input type="range" name="volume" min="0" max="100" value="0" step="1" id="volumeSlider">
+                <i class="fas fa-volume-up" id="volumeDown"></i>
+            </div>
+
+    	</div>
+    </div>
+
+    <script type="text/javascript">
+    	const music = document.querySelector("audio");
+    	const img = document.querySelector("img");
+    	const play = document.getElementById("play");
+    	const artist = document.getElementById("artist");
+    	const title = document.getElementById("title");
+    	const prev = document.getElementById("prev");
+    	const next = document.getElementById("next");
+        const muteBtn = document.getElementById("muteBtn");
+        const volumeSlider = document.getElementById("volumeSlider");
+        const Heart = document.getElementById("Heart");
+
+    	let progress = document.getElementById("progress");
+    	let total_duration = document.getElementById("duration");
+    	let total_currentTime = document.getElementById("current_time");
+
+    	const progress_div = document.getElementById("progress_div");
+
+    	let isPlaying = false;
+    		// for play
+    	const playMusic =()=>{
+    		isPlaying = true;
+    		music.play();
+    		play.classList.replace("fa-play" , "fa-pause");
+    		img.classList.add("rotating");
+    	};
+    	// for pause function
+    	const pauseMusic =()=>{
+    		isPlaying = false;
+    		music.pause();
+    		play.classList.replace("fa-pause" , "fa-play");
+    		img.classList.remove("rotating");
+    	};
+
+    	play.addEventListener("click", ()=>{
+    	  	/*we can use there if else or ternary-operator
+	    		if(isPlaying){
+	    			pauseMusic();
+	    		}else{
+	    			playMusic();
+	    		}
+    		*/
+    		isPlaying ? pauseMusic() : playMusic();
+    	});
+
+
+    	// Changing of Songs
+    	const songs = [
+    		{
+    			name : "data-1",
+    			title : "Ye Jism",
+    			artist : "Ali Azmat",
+    		},
+    		{
+    			name : "data-2",
+    			title : "Turtle Time",
+    			artist : "Tony Gould",
+    		},
+    		{
+    			name : "data-4",
+    			title : "Don't Wanna Be",
+    			artist : "Gavin DeGraw",
+    		},
+    		{
+    			name : "data-3",
+    			title : "Favrioute Song",
+    			artist : "Coding Maina",
+    		},
+    	];
+
+    	const loadSong = (songs) =>{
+    		title.textContent = songs.title;
+    		artist.textContent = songs.artist;
+    		music.src = "music/" + songs.name + ".mp3";
+    		// music.src = `music/${songs.name}.mp3`;
+    		img.src = "images/" + songs.name + ".png";
+    	};
+
+    	// loadSong(songs[0]);
+    	songIndex = 0;
+
+    	const nextSong =()=>{
+    		// songIndex ++;
+    		songIndex = (songIndex + 1) % songs.length;
+    		loadSong(songs[songIndex]);
+    		playMusic();
+    	};
+    	const prevSong =()=>{
+    		// songIndex ++;
+    		songIndex = (songIndex - 1 + songs.length) % songs.length;
+    		loadSong(songs[songIndex]);
+    		playMusic();
+    	};
+
+    	// Progress Java
+
+    	music.addEventListener("timeupdate",(event)=>{
+    		// console.log(event);
+    		const { currentTime , duration } = event.srcElement;
+    		// console.log(currentTime);
+    		// console.log(duration);
+
+    		let progress_time = (currentTime / duration) * 100;
+    		// console.log(progress_time);
+    		progress.style.width = `${progress_time}%`;
+
+    		//music duration
+    			//sec min = minute / dur = duration
+    		let min_dur = Math.floor(duration / 60);
+    		let sec_dur = Math.floor(duration % 60);
+    		let tot_dur = `${min_dur}:${sec_dur}`;
+
+    		if(duration){
+    			total_duration.textContent = `${tot_dur}`;	
+    		}
+    		
+
+    		//music current time
+    		let min_currentTime = Math.floor(currentTime / 60);
+    		let sec_currentTime = Math.floor(currentTime % 60);
+	   		
+	   		if (sec_currentTime) {
+	   			sec_currentTime = `0${sec_currentTime}`;
+	   		}
+	   		let tot_currentTime = `${min_currentTime}:${sec_currentTime}`;
+    		total_currentTime.textContent = `${tot_currentTime}`;
+
+
+    	});
+
+    	// OnClik Progress
+    	progress_div.addEventListener("click", (event)=>{
+
+    		const { duration } = music;
+    		let cursor_move = (event.offsetX / event.srcElement.clientWidth) * duration;
+    		music.currentTime = cursor_move;
+    	});
+
+
+    	music.addEventListener("ended" , nextSong);
+
+    	next.addEventListener("click", nextSong);
+    	prev.addEventListener("click", prevSong);
+
+        // vlomeMuted
+        // let muteBtn = document.getElementById("muteBtn");
+        muteBtn.addEventListener("click", function() {
+          if (music.volume === 1) {
+            music.volume = 0;
+            // document.querySelector("muteBtn i").classList = "fa fa-volume-mute";
+            muteBtn.classList.replace("fa-volume-up" , "fa-volume-mute");
+          }else {
+            music.volume = 1;
+            // document.querySelector("muteBtn i").classList = "fa fa-volume-up";
+            muteBtn.classList.replace("fa-volume-mute" , "fa-volume-up");
+          }
+
+        });
+        
+        // let volumeSlider = document.getElementById("volumeSlider"); 
+        // volumeSlider.addEventListener("mousemove" ,setVolume);
+        // function setVolume () {
+        //     music.volume = volumeSlider.value / 100;
+        // }
+
+        volumeSlider.addEventListener("mousemove" ,()=>{
+            music.volume = volumeSlider.value / 100;
+        });
+
+
+
+        // <i class="fas fa-heart" title="By Heartly" id="Heart"></i>
+                // <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+    </script>
+</body>
+</html>

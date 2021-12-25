@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap');
+*,*::before,*::after{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+html{
+	font-size: 62.5%;
+	font-family: 'Gugi', cursive;
+}
+.main_div{
+	width: 100vw;
+	height: 100vh;
+	display: grid;
+	place-items: center;
+}
+.main_div .music_container{
+	width: 31rem;
+	height: 61rem;
+	background: url(./app-mobile.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 2rem;
+	box-shadow: 0 1.2rem 3rem 0.5rem rgba(0,0,0,0.2);
+	padding: 3rem;
+	text-align: center;
+}
+.main_div .music_container h1{
+	text-transform: uppercase;
+	letter-spacing: 0.2rem;
+	word-spacing: 0.5rem;
+	color: #000;
+	margin: 2rem 0 0.5rem 0;
+	font-size: 2.5rem;
+	font-weight: 500;
+	text-shadow: 0 0.3rem 0.5rem rgba(0,0,0,0.3);
+}
+.main_div .music_container h3{
+	color: #cacaca;
+	text-transform: uppercase;
+	letter-spacing: 0.1rem;
+	font-size: 1.5rem;
+	margin-bottom: 4rem;
+	font-weight: 300;
+}
+.main_div .img_container{
+	width: 25rem;
+	height: 25rem;
+	margin: auto;
+} 
+.main_div .img_container img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 100rem;
+	box-shadow: 0 1.2rem 3rem 0.5rem rgba(0,0,0,0.4);
+}
+.controls{
+	width: 20rem;
+	display: flex;
+	justify-content: space-between;
+	margin: auto;
+	margin-top: 1.3rem;
+	align-items: center;
+}
+.music_container .controls i{
+	color: #111;
+	font-size: 2rem;
+	cursor: pointer;
+	filter: drop-shadow(0 1.2rem 3rem 0.3rem rgba(0,0,0,0.4));
+}
+.music_container .controls .main-button{
+	width: 5rem;
+	height: 5rem;
+	border-radius: 50%;
+	background-color: #111;
+	color: #fff;
+	display: flex;
+	font-size: 1.4rem;
+	justify-content: center;
+	align-items: center;
+}
+.music_container .controls i:hover{
+	color: #f23023;
+}
+.music_container .controls .main-button:hover{
+	background-color: #fff;
+	color: #111;
+	box-shadow: 0 1rem 2rem 0.3rem rgba(0,0,0,0.5);
+}
+
+.rotating{
+	-webkit-animation: rotate 3s linear infinite;
+	   -moz-animation: rotate 3s linear infinite;
+	    -ms-animation: rotate 3s linear infinite;
+	     -o-animation: rotate 3s linear infinite;
+	        animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate{
+	from{
+		-webkit-transform: rotate(0deg);
+		   -moz-transform: rotate(0deg);
+		    -ms-transform: rotate(0deg);
+		     -o-transform: rotate(0deg);
+		        transform: rotate(0deg);
+	}
+	to{
+		-webkit-transform: rotate(360deg);
+		   -moz-transform: rotate(360deg);
+		    -ms-transform: rotate(360deg);
+		     -o-transform: rotate(360deg);
+		        transform: rotate(360deg);
+	}
+}
+
+/*progressbar_container*/
+.progressbar_container{
+	width: 100%;
+	height: auto;
+	padding: 1rem 0rem;	
+	margin-top: 1rem;
+}
+.progressbar_container .progress_div{
+	width: 100%;
+	height: 0.7rem;
+	border-radius: 4rem;
+	position: relative;
+	margin-top: 0.5rem;
+	cursor: pointer;
+	-webkit-appearance: none;
+	appearance: none;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.07) ,
+				0 2px 4px rgba(0,0,0,0.07) ,
+				0 4px 8px rgba(0,0,0,0.07) ,
+				0 8px 16px rgba(0,0,0,0.07),
+				0 16px 32px rgba(0,0,0,0.07),
+				0 32px 64px rgba(0,0,0,0.07);
+	-webkit-transition: all 1s linear;
+	   -moz-transition: all 1s linear;
+	    -ms-transition: all 1s linear;
+	     -o-transition: all 1s linear;
+	        transition: all 1s linear;
+}
+.progressbar_container .progress_div .progress{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0%;
+	height: 100%;
+	background-color: #000;
+	border-radius: 4rem;
+	cursor: pointer;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.progressbar_container .progress_div:hover .progress{
+	background-color: #0099ff;
+}
+.progressbar_container .progress_meter {
+	display: flex;
+	justify-content: space-between;
+	font-size: 1.2rem;
+}
+
+/*volume*/
+#volume{
+	margin-top: 3vh;
+}
+#volumeSlider{
+	height: 0.7rem;
+	border-radius: 4rem;
+	cursor: pointer;
+	-webkit-appearance: none;
+	appearance: none;
+	z-index: 100;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.10) ,
+			0 2px 4px rgba(0,0,0,0.10) ,
+			0 4px 8px rgba(0,0,0,0.10) ,
+			0 8px 16px rgba(0,0,0,0.10),
+			0 16px 32px rgba(0,0,0,0.10),
+			0 32px 64px rgba(0,0,0,0.10);
+	border: none !important;
+	outline: none !important;
+}
+#volume i{
+	font-size: 2rem;
+	cursor: pointer;
+	margin: 0 1.2rem;
+}
+.music_container .volume_muted{
+	display: flex;
+	justify-content: space-between;
+}
+.music_container .volume_muted i{
+	font-size: 1.5rem;
+	cursor: pointer;
+}
+/*volume_muted*/
+.volume_muted i:hover{
+	color: #f23023;
+}
